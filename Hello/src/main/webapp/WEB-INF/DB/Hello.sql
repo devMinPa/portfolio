@@ -1,12 +1,3 @@
-DROP USER hello CASCADE; 
-CREATE USER hello IDENTIFIED BY hello1234 DEFAULT TABLESPACE users TEMPORARY
-TABLESPACE temp PROFILE DEFAULT;
-GRANT CONNECT, RESOURCE TO hello;
-GRANT CREATE VIEW, CREATE SYNONYM TO hello;
-ALTER USER hello ACCOUNT UNLOCK;
-/* 여기서부터는 마당 계정으로 접속 */
-conn hello/hello1234;
-
 DROP TABLE product;
 CREATE TABLE Product (
  p_id VARCHAR2(10) PRIMARY KEY,
@@ -49,11 +40,22 @@ DROP TABLE orders;
 CREATE TABLE Orders (
  order_id NUMBER(8) PRIMARY KEY,
  c_id VARCHAR2(10),
- p_id VARCHAR2(10),
- saleprice NUMBER(8) ,
+ consignee VARCHAR2(20),
+ phone VARCHAR2(20),
+ address VARCHAR2(90),
  orderdate DATE,
  status VARCHAR2(10)
 );
+
+DROP TABLE OrderList;
+CREATE TABLE OrderList (
+ order_id NUMBER(8),
+ p_id VARCHAR2(10),
+ saleprice NUMBER(8),
+ quantity NUMBER(3),
+ rating NUMBER(1,1)
+);
+
 
 DROP TABLE major_category;
 CREATE TABLE major_category (
@@ -77,7 +79,7 @@ CREATE TABLE category_map(
 /* Book, Customer, Orders 데이터 생성 */
 INSERT INTO product VALUES('P0001','축구의 역사', '굿스포츠', 7000,null);
 INSERT INTO product VALUES('P0002','축구아는 여자', '나무수', 13000,null);
-INSERT INTO product VALUES('P0003','갤럭시탭', '삼성전자', 7500,'11인치(27.9cm), 128GB, WiFi, 안드로이드');
+INSERT INTO product VALUES('P0003','갤럭시탭', '삼성전자', 750000,'11인치(27.9cm), 128GB, WiFi, 안드로이드');
 INSERT INTO product VALUES('P0004','후라이팬', 'happycall', 13000, '36cm');
 INSERT INTO product VALUES('P0005','토드백2023ss', '버버리', 8000000,null);
 INSERT INTO product VALUES('P0006','아이폰11', 'apple', 1490000,'pro');
@@ -94,16 +96,31 @@ INSERT INTO Customer VALUES ('jmr','jmr1234', '장미란','W','19821021','jmr@gm
 INSERT INTO Customer VALUES ('choo','ch1234', '추신수','M','19800312','choo@gmail.com', '000-8000-0001','미국 클리블랜드','230403');
 INSERT INTO Customer VALUES ('park','sr1234', '박세리','W','19790505','park@gmail.com', NULL,'대한민국 대전','230401');
 
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', 'P0001', 6000, TO_DATE('2014-07-01','yyyy-mm-dd'),null); 
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', 'P0003', 21000, TO_DATE('2014-07-03','yyyy-mm-dd'),'ordered');
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'kim', 'P0005', 8000, TO_DATE('2014-07-03','yyyy-mm-dd'),'ordered');
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'jmr', 'P0006', 6000, TO_DATE('2014-07-04','yyyy-mm-dd'),'ordered'); 
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'choo', 'P0007', 20000, TO_DATE('2014-07-05','yyyy-mm-dd'),'ordered');
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', 'P0002', 12000, TO_DATE('2014-07-07','yyyy-mm-dd'),'ordered');
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'choo', 'P0008', 13000, TO_DATE( '2014-07-07','yyyy-mm-dd'),'delivered');
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'jmr', 'P0010', 12000, TO_DATE('2014-07-08','yyyy-mm-dd'),'delivered'); 
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'kim', 'P0010', 7000, TO_DATE('2014-07-09','yyyy-mm-dd'),'completed'); 
-INSERT INTO Orders VALUES (orderno_seq.nextval, 'jmr', 'P0008', 13000, TO_DATE('2014-07-10','yyyy-mm-dd'),'completed');
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', '박지성', '000-5000-0001', '영국 맨체스타', TO_DATE('2014-07-01','yyyy-mm-dd'),'completed'); 
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', '박지성', '000-5000-0001', '영국 맨체스타', TO_DATE('2014-07-03','yyyy-mm-dd'),'completed');
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'kim', '김연아', '000-6000-0001', '대한민국 서울', TO_DATE('2014-07-03','yyyy-mm-dd'),'completed');
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'jmr', '장미란', '000-7000-0001', '대한민국 강원도', TO_DATE('2014-07-04','yyyy-mm-dd'),'completed'); 
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'choo', '추신수', '000-8000-0001' ,'미국 클리블랜드', TO_DATE('2014-07-05','yyyy-mm-dd'),'completed');
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', '박지성', '000-5000-0001', '영국 맨체스타', TO_DATE('2014-07-07','yyyy-mm-dd'),'completed');
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'choo', '추신수', '000-8000-0001', '미국 클리블랜드', TO_DATE( '2014-07-07','yyyy-mm-dd'),'delivered');
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'jmr', '장미란', '000-7000-0001', '대한민국 강원도', TO_DATE('2014-07-08','yyyy-mm-dd'),'delivered'); 
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'kim', '김연아', '000-6000-0001', '대한민국 서울', TO_DATE('2014-07-09','yyyy-mm-dd'),'ordered'); 
+INSERT INTO Orders VALUES (orderno_seq.nextval, 'jmr', '장미란', '000-7000-0001', '대한민국 강원도', TO_DATE('2014-07-10','yyyy-mm-dd'),'ordered');
+
+INSERT INTO orderList VALUES (1, 'P0001', 7000, 2, 4.5);
+INSERT INTO orderList VALUES (1, 'P0004', 13000, 1, 4);
+INSERT INTO orderList VALUES (2, 'P0009', 130000, 2, 4.5);
+INSERT INTO orderList VALUES (3, 'P0005', 8000000, 1, 4);
+INSERT INTO orderList VALUES (3, 'P0006', 1490000, 1, 4);
+INSERT INTO orderList VALUES (3, 'P0010', 13000, 1, 3);
+INSERT INTO orderList VALUES (4, 'P0009', 130000, 1, 2);
+INSERT INTO orderList VALUES (5, 'P0001', 7000, 2, 4);
+INSERT INTO orderList VALUES (6, 'P0011', 1300000, 1, 4.5);
+INSERT INTO orderList VALUES (6, 'P0012', 1000000, 1, 4);
+INSERT INTO orderList VALUES (7, 'P0004', 13000, 2, 4);
+INSERT INTO orderList VALUES (8, 'P0006', 1490000, 1, 4.5);
+INSERT INTO orderList VALUES (9, 'P0003', 750000, 1, 4);
+INSERT INTO orderList VALUES (10, 'P0010', 13000, 1, 3.5);
 
 --카테고리(대분류)
 INSERT INTO major_category VALUES('CM001','Books');
@@ -143,18 +160,60 @@ INSERT INTO category_map VALUES('P0006','C0005');
 INSERT INTO category_map VALUES('P0007','C0006');
 INSERT INTO category_map VALUES('P0008','C0007');
 INSERT INTO category_map VALUES('P0008','C0012');
-INSERT INTO category_map VALUES('P0009','C0001');
+INSERT INTO category_map VALUES('P0009','C0010');
 INSERT INTO category_map VALUES('P0010','C0002');
 INSERT INTO category_map VALUES('P0010','C0011');
 INSERT INTO category_map VALUES('P0011','C0013');
 INSERT INTO category_map VALUES('P0012','C0014');
 
+INSERT INTO interests VALUES('pjs','CM001');
+INSERT INTO interests VALUES('pjs','CM006');
+INSERT INTO interests VALUES('kim','CM001');
+INSERT INTO interests VALUES('kim','CM002');
+INSERT INTO interests VALUES('kim','CM005');
+
+
+-- products(All)
 select 
-         s.major_ctg, mc.ctg_name, m.ctg_id, s.ctg_name, p.p_id, p.pname
+        mc.ctg_name, s.ctg_name, p.pname, manufacturer, price, p_description
   from 
         product p,category_map m,sub_category s, major_category mc
  where  
         p.p_id = m.p_id
     and m.ctg_id= s.ctg_id
     and s.major_ctg= mc.ctg_id
-order by s.ctg_id,major_ctg;
+order by major_ctg,s.ctg_id,p.p_id;
+
+-- products(Books)-대분류
+select 
+        mc.ctg_name, s.ctg_name, p.pname, manufacturer, price, p_description
+  from 
+        product p,category_map m,sub_category s, major_category mc
+ where  
+        p.p_id = m.p_id
+    and m.ctg_id= s.ctg_id
+    and s.major_ctg= mc.ctg_id
+    and s.major_ctg='CM001' --'major_ctg'
+order by s.ctg_id,p.p_id;
+
+-- products(sportsBook)-소분류
+select 
+        mc.ctg_name, s.ctg_name, p.pname, manufacturer, price, p_description
+  from 
+        product p,category_map m,sub_category s, major_category mc
+ where  
+        p.p_id = m.p_id
+    and m.ctg_id= s.ctg_id
+    and s.major_ctg= mc.ctg_id
+    and s.major_ctg='CM001' --'major_ctg'
+    and s.ctg_id='C0001' --'ctg_id'
+order by s.ctg_id,p.p_id;
+
+-- login sucess - 고객 관심분야 인기상품 추천
+select
+        o.c_id, l.p_id, l.rating
+  from
+        orders o, orderlist l
+ where
+        o.order_id=l.order_id
+order by p_id;
