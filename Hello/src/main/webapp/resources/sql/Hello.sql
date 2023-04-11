@@ -1,10 +1,63 @@
+drop sequence num_seq;
+CREATE SEQUENCE num_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE TABLE  product(
+	p_id VARCHAR(10) NOT NULL,
+	p_name VARCHAR(20),
+	p_unitPrice  INTEGER,
+	p_description VARCHAR(500),
+   	p_category VARCHAR(20),
+	p_manufacturer VARCHAR(20),
+	p_unitsInStock NUMBER,
+	p_condition VARCHAR(20),
+	p_fileName  VARCHAR(20),
+	PRIMARY KEY (p_id)
+) ;
+
+drop table member2;
+create table member2 ( 
+    id varchar2(10) not null,
+    password varchar2(10) not null,
+    name varchar2(10) not null,
+    gender varchar2(4),
+    birth  varchar2(10),
+    mail  varchar2(30),
+    phone varchar2(20),
+    address varchar2(90),
+    regist_day varchar2(50),    
+    primary key(id) 
+) ;
+
+INSERT INTO product VALUES('P1234', 'iPhone 6s', 800000, '1334X750 Renina HD display, 8-megapixel iSight Camera','Smart Phone', 'Apple', 1000, 'new', 'P1234.png');
+INSERT INTO product VALUES('P1235', 'LG PC gram', 1500000, '3.3-inch,IPS LED display, 5rd Generation Intel Core processors', 'Notebook', 'LG', 1000, 'new', 'P1235.png');
+INSERT INTO product VALUES('P1236', 'Galaxy Tab S', 900000, '3.3-inch, 212.8*125.6*6.6mm,  Super AMOLED display, Octa-Core processor', 'Tablet', 'Samsung', 1000, 'new', 'P1236.png');
+
+commit;
+
+drop table board;
+CREATE TABLE board (
+       num number not null,
+       id varchar2(10) not null,
+       name varchar2(10) not null,
+       subject varchar2(100) not null,
+       content varchar2(500) not null,
+       regist_day varchar(30),
+       hit number,
+       ip varchar(20),
+       PRIMARY KEY (num)
+);
+
 DROP TABLE product;
 CREATE TABLE Product (
  p_id VARCHAR2(10) PRIMARY KEY,
- pname VARCHAR2(40),
- manufacturer VARCHAR2(40),
- price NUMBER(8),
- p_description VARCHAR2(100)
+ p_name VARCHAR2(40),
+ p_price NUMBER(8),
+ p_description VARCHAR2(100),
+ p_manufacturer VARCHAR2(40),
+ p_unitsInStock NUMBER,
+ p_filename VARCHAR(20)
  );
 
 DROP TABLE Customer; 
@@ -53,7 +106,7 @@ CREATE TABLE OrderList (
  p_id VARCHAR2(10),
  saleprice NUMBER(8),
  quantity NUMBER(3),
- rating NUMBER(1,1)
+ rating NUMBER(2,1)
 );
 
 
@@ -77,18 +130,18 @@ CREATE TABLE category_map(
  );
 
 /* Book, Customer, Orders 데이터 생성 */
-INSERT INTO product VALUES('P0001','축구의 역사', '굿스포츠', 7000,null);
-INSERT INTO product VALUES('P0002','축구아는 여자', '나무수', 13000,null);
-INSERT INTO product VALUES('P0003','갤럭시탭', '삼성전자', 750000,'11인치(27.9cm), 128GB, WiFi, 안드로이드');
-INSERT INTO product VALUES('P0004','후라이팬', 'happycall', 13000, '36cm');
-INSERT INTO product VALUES('P0005','토드백2023ss', '버버리', 8000000,null);
-INSERT INTO product VALUES('P0006','아이폰11', 'apple', 1490000,'pro');
-INSERT INTO product VALUES('P0007','매직마우스', 'apple', 120000,null);
-INSERT INTO product VALUES('P0008','4K모니터', 'LG', 1100000,'32Inch 4K 스마트TV');
-INSERT INTO product VALUES('P0009','월드컵공인구','아디다스',130000,'2022카타르');
-INSERT INTO product VALUES('P0010','정보처리기사필기','시나공',13000,'기출문제500제');
-INSERT INTO product VALUES('P0011','건조기2010','LG',1300000,'건조기 10kg');
-INSERT INTO product VALUES('P0012','통돌이2010','LG',1000000,'통돌이 10kg');
+INSERT INTO product VALUES('P0001','축구의 역사', 7000, '1999년, 알프레드바알 저', '굿스포츠', 10, 'P0001.jpg');
+INSERT INTO product VALUES('P0002','축구아는 여자', 13000, '2010년, 이은하 저', '나무수', 1,'P0002.jpg');
+INSERT INTO product VALUES('P0003','갤럭시탭', 750000, '11인치(27.9cm), 128GB, WiFi, 안드로이드','삼성전자',100,'P0003.png');
+INSERT INTO product VALUES('P0004','후라이팬', 13000, '36cm', 'happycall',1000, 'P0004.jpg');
+INSERT INTO product VALUES('P0005','토드백', 8000000, '2023ss', '버버리',3,'P0005.jpg');
+INSERT INTO product VALUES('P0006','아이폰11', 1490000,'pro', 'apple',99,'P0006.png');
+INSERT INTO product VALUES('P0007','매직마우스', 120000, '무선, 터치패드 기능', 'apple', 10, 'P0007.jpg');
+INSERT INTO product VALUES('P0008','4K모니터', 1100000, '32Inch 4K 스마트TV', 'LG',22,'P0008.jpg');
+INSERT INTO product VALUES('P0009','월드컵공인구',130000,'2022카타르','아디다스', 100,'P0009.jpg');
+INSERT INTO product VALUES('P0010','정보처리기사필기',13000,'기출문제500제','시나공',200,'P0010.jpg');
+INSERT INTO product VALUES('P0011','건조기2010',1300000,'건조기 10kg','LG',15,'P0011.jpg');
+INSERT INTO product VALUES('P0012','통돌이2010',1000000,'통돌이 10kg','LG',15,'P0012.jpg');
 
 INSERT INTO Customer VALUES ('pjs','pjs1234', '박지성','M','19800121','pjs@gmail.com', '000-5000-0001','영국 맨체스타','230403');
 INSERT INTO Customer VALUES ('kim','kim1234', '김연아','W','19870620','kim@gmail.com', '000-6000-0001','대한민국 서울','230403'); 
