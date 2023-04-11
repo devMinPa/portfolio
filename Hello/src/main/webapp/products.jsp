@@ -1,8 +1,8 @@
-<%@page import="dto.Product"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=utf-8"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="dao.ProductRepository" %>
+<%@ page import="dto.Product"%>
 <%! 
 	
 %>
@@ -23,7 +23,6 @@
 		<div class="row" align="center">
 			<%
 			ProductRepository dao=ProductRepository.getInstance();
-			dao.setAllProduct();
 			ArrayList<Product> listOfProducts = dao.getAllProducts();
 	 		for (int i = 0; i < listOfProducts.size(); i++) {
 			Product product = listOfProducts.get(i); 

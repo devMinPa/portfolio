@@ -29,6 +29,22 @@ public class Product implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 
+	
+	
+	public Product(String productId, String pname, Integer unitPrice, String description, String manufacturer,
+			Integer unitsInStock, String filename, String majorCtg, String subCtg) {
+		super();
+		this.productId = productId;
+		this.pname = pname;
+		this.unitPrice = unitPrice;
+		this.description = description;
+		this.manufacturer = manufacturer;
+		this.unitsInStock = unitsInStock;
+		this.filename = filename;
+		this.majorCtg = majorCtg;
+		this.subCtg = subCtg;
+	}
+
 	public String getProductId() {
 		return productId;
 	}

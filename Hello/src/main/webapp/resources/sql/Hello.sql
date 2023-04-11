@@ -3,19 +3,6 @@ CREATE SEQUENCE num_seq
 START WITH 1
 INCREMENT BY 1;
 
-CREATE TABLE  product(
-	p_id VARCHAR(10) NOT NULL,
-	p_name VARCHAR(20),
-	p_unitPrice  INTEGER,
-	p_description VARCHAR(500),
-   	p_category VARCHAR(20),
-	p_manufacturer VARCHAR(20),
-	p_unitsInStock NUMBER,
-	p_condition VARCHAR(20),
-	p_fileName  VARCHAR(20),
-	PRIMARY KEY (p_id)
-) ;
-
 drop table member2;
 create table member2 ( 
     id varchar2(10) not null,
@@ -29,10 +16,6 @@ create table member2 (
     regist_day varchar2(50),    
     primary key(id) 
 ) ;
-
-INSERT INTO product VALUES('P1234', 'iPhone 6s', 800000, '1334X750 Renina HD display, 8-megapixel iSight Camera','Smart Phone', 'Apple', 1000, 'new', 'P1234.png');
-INSERT INTO product VALUES('P1235', 'LG PC gram', 1500000, '3.3-inch,IPS LED display, 5rd Generation Intel Core processors', 'Notebook', 'LG', 1000, 'new', 'P1235.png');
-INSERT INTO product VALUES('P1236', 'Galaxy Tab S', 900000, '3.3-inch, 212.8*125.6*6.6mm,  Super AMOLED display, Octa-Core processor', 'Tablet', 'Samsung', 1000, 'new', 'P1236.png');
 
 commit;
 
@@ -225,21 +208,9 @@ INSERT INTO interests VALUES('kim','CM001');
 INSERT INTO interests VALUES('kim','CM002');
 INSERT INTO interests VALUES('kim','CM005');
 
-
--- products(All)
-select 
-        mc.ctg_name, s.ctg_name, p.pname, manufacturer, price, p_description
-  from 
-        product p,category_map m,sub_category s, major_category mc
- where  
-        p.p_id = m.p_id
-    and m.ctg_id= s.ctg_id
-    and s.major_ctg= mc.ctg_id
-order by major_ctg,s.ctg_id,p.p_id;
-
 -- products(Books)-대분류
 select 
-        mc.ctg_name, s.ctg_name, p.pname, manufacturer, price, p_description
+        mc.ctg_name, s.ctg_name, p.p_id, p.p_name, p_price, p_description, p_manufacturer, p_unitsinstock, p_filename
   from 
         product p,category_map m,sub_category s, major_category mc
  where  
@@ -247,19 +218,6 @@ select
     and m.ctg_id= s.ctg_id
     and s.major_ctg= mc.ctg_id
     and s.major_ctg='CM001' --'major_ctg'
-order by s.ctg_id,p.p_id;
-
--- products(sportsBook)-소분류
-select 
-        mc.ctg_name, s.ctg_name, p.pname, manufacturer, price, p_description
-  from 
-        product p,category_map m,sub_category s, major_category mc
- where  
-        p.p_id = m.p_id
-    and m.ctg_id= s.ctg_id
-    and s.major_ctg= mc.ctg_id
-    and s.major_ctg='CM001' --'major_ctg'
-    and s.ctg_id='C0001' --'ctg_id'
 order by s.ctg_id,p.p_id;
 
 -- login sucess - 고객 관심분야 인기상품 추천

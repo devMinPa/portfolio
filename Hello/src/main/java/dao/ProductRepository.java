@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,10 +11,8 @@ import dto.Product;
 
 
 public class ProductRepository {
-	Connection conn; // 멤버변수
-	Statement stmt;
-	ResultSet rs;
-	Product product;
+	private Connection conn;
+	private Product product;
 	
 	private ArrayList<Product> listOfProducts = new ArrayList<Product>();
 	private static ProductRepository instance = new ProductRepository();
@@ -25,11 +22,7 @@ public class ProductRepository {
 	} 
 
 
-	public ProductRepository() {
-		conn = null;
-		stmt = null;
-		rs = null;
-		product = null;
+	private ProductRepository() {
 	}
 
 	public void getConn() {
@@ -52,8 +45,7 @@ public class ProductRepository {
 		}
 	}
 
-	
-	public void setAllProduct() {
+	public ArrayList<Product> getAllProducts() {
 		getConn();
 		String sql = "";
 		sql += "select ";
@@ -68,21 +60,10 @@ public class ProductRepository {
 		sql += 			"major_ctg,s.ctg_id,p.p_id ";
 		System.out.println(sql);
 		try {
-			stmt = conn.createStatement(); // 2
-			rs = stmt.executeQuery(sql); // 3
-						
+			Statement stmt = conn.createStatement(); // 2
+			ResultSet rs = stmt.executeQuery(sql); // 3
 			while (rs.next()) {  
-				product.setMajorCtg(rs.getString(1));
-				product.setSubCtg(rs.getString(2));
-				product.setProductId(rs.getString(3));
-				product.setPname(rs.getString(4));
-				product.setUnitPrice(rs.getInt(5));
-				product.setDescription(rs.getString(6)); 
-				product.setManufacturer(rs.getString(7));
-				product.setUnitsInStock(rs.getInt(8));
-				product.setFilename(rs.getString(9));
-				
-				instance.addProduct(product);
+				listOfProducts.add(new Product(rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getString(9),rs.getString(1),rs.getString(2)));
 			} 
 			if (rs != null)
 				rs.close();
@@ -93,9 +74,6 @@ public class ProductRepository {
 		}catch (SQLException e) {
 		e.printStackTrace();
 		}
-	}
-		
-	public ArrayList<Product> getAllProducts() {
 		return listOfProducts;
 	}
 	

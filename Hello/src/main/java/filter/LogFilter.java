@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 public class LogFilter implements Filter  {
 	
 	public void  init(FilterConfig config) {
-		System.out.println("WebMarket 초기화...."); 
+		System.out.println("Hello 초기화...."); 
 	}
 	
 	public void  doFilter(ServletRequest request,ServletResponse response,FilterChain chain) throws java.io.IOException, ServletException {
