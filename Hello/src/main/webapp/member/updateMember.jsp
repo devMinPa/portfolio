@@ -10,11 +10,11 @@
 %>
 <sql:setDataSource var="dataSource"
 	url="jdbc:oracle:thin:@localhost:1521:xe"
-	driver="oracle.jdbc.driver.OracleDriver" user="webmarket" password="webmarket1234" />
+	driver="oracle.jdbc.driver.OracleDriver" user="hello" password="hello1234" />
 
 
 <sql:query dataSource="${dataSource}" var="resultSet">
-   SELECT * FROM MEMBER2 WHERE ID=?
+   SELECT * FROM CUSTOMER WHERE C_ID=?
    <sql:param value="<%=sessionId%>" />
 </sql:query>
 
@@ -31,7 +31,7 @@
 	</div>
 
 	<c:forEach var="row" items="${resultSet.rows}">
-	<c:set var="mail" value="${row.mail}" />
+	<c:set var="mail" value="${row.email}" />
 	<c:set var="mail1" value="${mail.split('@')[0]}" />
 	<c:set var="mail2" value="${mail.split('@')[1]}" />
 
@@ -48,14 +48,14 @@
 				<label class="col-sm-2 ">아이디</label>
 				<div class="col-sm-3">
 					<input name="id" type="text" class="form-control" placeholder="id"
-						value="<c:out value='${row.id }'/>" />
+						value="<c:out value='${row.c_id }'/>" />
 				</div>
 			</div>
 			<div class="form-group  row">
 				<label class="col-sm-2">비밀번호</label>
 				<div class="col-sm-3">
 					<input name="password" type="text" class="form-control"
-						placeholder="password" value="<c:out value='${row.password }'/>" >
+						placeholder="password" value="<c:out value='${row.passwd }'/>" >
 				</div>
 			</div>
 			<div class="form-group  row">
@@ -69,7 +69,7 @@
 				<label class="col-sm-2">성명</label>
 				<div class="col-sm-3">
 					<input name="name" type="text" class="form-control"
-						placeholder="name" value="<c:out value='${row.name }'/>" >
+						placeholder="name" value="<c:out value='${row.c_name }'/>" >
 				</div>
 			</div>
 			<div class="form-group  row">

@@ -38,7 +38,7 @@
 				<img src="./upload2/<%=rs.getString("p_fileName")%>" style="width: 100%">
 				<h3><%=rs.getString("p_name")%></h3>
 				<p><%=rs.getString("p_description")%>
-				<p><%=rs.getString("p_UnitPrice")%>원
+				<p><%=rs.getString("p_price")%>원
 				<p>
 					<%
 						if (edit.equals("update")) {

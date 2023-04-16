@@ -27,11 +27,11 @@
 
 <sql:setDataSource var="dataSource"
 	url="jdbc:oracle:thin:@localhost:1521:xe"
-	driver="oracle.jdbc.driver.OracleDriver" user="webmarket" password="webmarket1234" />
+	driver="oracle.jdbc.driver.OracleDriver" user="hello" password="hello1234" />
 
 
 <sql:update dataSource="${dataSource}" var="resultSet">
-   UPDATE MEMBER2 SET PASSWORD=?, NAME=?, GENDER=?, BIRTH=?, MAIL=?, PHONE=?, ADDRESS=? WHERE ID=?
+   UPDATE CUSTOMER SET PASSWD=?, C_NAME=?, GENDER=?, BIRTH=?, EMAIL=?, PHONE=?, ADDRESS=? WHERE C_ID=?
 	<sql:param value="<%=password%>" />
 	<sql:param value="<%=name%>" />
 	<sql:param value="<%=gender%>" />

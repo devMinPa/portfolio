@@ -27,10 +27,10 @@
 
 <sql:setDataSource var="dataSource"
 	url="jdbc:oracle:thin:@localhost:1521:xe"
-	driver="oracle.jdbc.driver.OracleDriver" user="webmarket" password="webmarket1234" />
+	driver="oracle.jdbc.driver.OracleDriver" user="hello" password="hello1234" />
 
 <sql:update dataSource="${dataSource}" var="resultSet">
-   INSERT INTO member2 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+   INSERT INTO CUSTOMER VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
    <sql:param value="<%=id%>" />
 	<sql:param value="<%=password%>" />
 	<sql:param value="<%=name%>" />

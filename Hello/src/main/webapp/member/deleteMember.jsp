@@ -7,11 +7,11 @@
 %>
 <sql:setDataSource var="dataSource"
 	url="jdbc:oracle:thin:@localhost:1521:xe"
-	driver="oracle.jdbc.driver.OracleDriver" user="webmarket" password="webmarket1234" />
+	driver="oracle.jdbc.driver.OracleDriver" user="hello" password="hello1234" />
 
 
 <sql:update dataSource="${dataSource}" var="resultSet">
-   DELETE FROM member2 WHERE id = ?
+   DELETE FROM customer WHERE c_id = ?
    <sql:param value="<%=sessionId%>" />
 </sql:update>
 

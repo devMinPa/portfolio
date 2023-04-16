@@ -12,10 +12,10 @@
 
 <sql:setDataSource var="dataSource"
 	url="jdbc:oracle:thin:@localhost:1521:xe"
-	driver="oracle.jdbc.driver.OracleDriver" user="webmarket" password="webmarket1234" />
+	driver="oracle.jdbc.driver.OracleDriver" user="hello" password="hello1234" />
 
 <sql:query dataSource="${dataSource}" var="resultSet">
-   SELECT * FROM MEMBER2 WHERE ID=? and password=?  
+   SELECT * FROM CUSTOMER WHERE C_ID=? and PASSWD=?  
    <sql:param value="<%=id%>" />
 	<sql:param value="<%=password%>" />
 </sql:query>
