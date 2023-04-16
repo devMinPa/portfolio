@@ -126,11 +126,12 @@ INSERT INTO product VALUES('P0010','정보처리기사필기',13000,'기출문�
 INSERT INTO product VALUES('P0011','건조기2010',1300000,'건조기 10kg','LG',15,'P0011.jpg');
 INSERT INTO product VALUES('P0012','통돌이2010',1000000,'통돌이 10kg','LG',15,'P0012.jpg');
 
-INSERT INTO Customer VALUES ('pjs','pjs1234', '박지성','M','19800121','pjs@gmail.com', '000-5000-0001','영국 맨체스타','230403');
-INSERT INTO Customer VALUES ('kim','kim1234', '김연아','W','19870620','kim@gmail.com', '000-6000-0001','대한민국 서울','230403'); 
-INSERT INTO Customer VALUES ('jmr','jmr1234', '장미란','W','19821021','jmr@gmail.com', '000-7000-0001','대한민국 강원도','230403');
-INSERT INTO Customer VALUES ('choo','ch1234', '추신수','M','19800312','choo@gmail.com', '000-8000-0001','미국 클리블랜드','230403');
-INSERT INTO Customer VALUES ('park','sr1234', '박세리','W','19790505','park@gmail.com', NULL,'대한민국 대전','230401');
+Insert into HELLO.CUSTOMER (C_ID,PASSWD,C_NAME,GENDER,BIRTH,EMAIL,PHONE,ADDRESS,REGIST_DAY) values ('pjs','pjs1234','박지성','남','1980/01/21','pjs@gmail.com','000-5000-0001','영국 맨체스타','23/04/03');
+Insert into HELLO.CUSTOMER (C_ID,PASSWD,C_NAME,GENDER,BIRTH,EMAIL,PHONE,ADDRESS,REGIST_DAY) values ('kim','kim1234','김연아','여','1987/06/20','kim1@gmail.com','02-6000-0001','대한민국 서울','23/04/03');
+Insert into HELLO.CUSTOMER (C_ID,PASSWD,C_NAME,GENDER,BIRTH,EMAIL,PHONE,ADDRESS,REGIST_DAY) values ('jmr','jmr1234','장미란','여','1982/10/21','jmr@gmail.com','000-7000-0001','대한민국 강원도','23/04/03');
+Insert into HELLO.CUSTOMER (C_ID,PASSWD,C_NAME,GENDER,BIRTH,EMAIL,PHONE,ADDRESS,REGIST_DAY) values ('choo','ch1234','추신수','남','1980/03/12','choo@gmail.com','000-8000-0001','미국 클리블랜드','23/04/03');
+Insert into HELLO.CUSTOMER (C_ID,PASSWD,C_NAME,GENDER,BIRTH,EMAIL,PHONE,ADDRESS,REGIST_DAY) values ('park','sr1234','박세리','여','1979/05/05','park@gmail.com',null,'대한민국 대전','23/04/01');
+--------------------------------------------------------
 
 INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', '박지성', '000-5000-0001', '영국 맨체스타', TO_DATE('2014-07-01','yyyy-mm-dd'),'completed'); 
 INSERT INTO Orders VALUES (orderno_seq.nextval, 'pjs', '박지성', '000-5000-0001', '영국 맨체스타', TO_DATE('2014-07-03','yyyy-mm-dd'),'completed');
