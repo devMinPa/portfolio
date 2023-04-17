@@ -4,18 +4,28 @@
 <%@ page import="dao.ProductRepository" %>
 <%@ page import="dto.Product"%>
 
-<script>
-	$('#myTab a').click(function (e) {
-	  e.preventDefault()
-	  $(this).tab('show')
-	})
-	$('.dropdown-toggle').dropdown()
-</script>
 
 <html>
 <head>
 <link rel ="stylesheet" href ="./resources/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> <!-- integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" -->
+<script>window.jQuery || document.write('<script src="./resources/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="./resources/vendor/popper.min.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
 <title>상품 목록</title>
+
+<script type="text/javascript">
+
+function get_majorCtgList(){
+	
+}
+
+function select_majorCtg(major){
+	alert(major);
+	
+	document.getElementById('majorCtg').innerText = major;
+}
+</script>
 </head>
 <body>
 	<jsp:include page="menu.jsp" />
@@ -27,9 +37,9 @@
 		</div>
 		<ul class="nav nav-tabs">
 			<li class="nav-item dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Category</button>
+				<button id="majorCtg" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Books</button>
 				<div class="dropdown-menu">
-					<button class="dropdown-item" type="button">Books</button>
+					<button class="dropdown-item" type="button" value="Books" onclick="select_majorCtg(this.value)">Books</button>
 					<button class="dropdown-item" type="button">Clothes</button>
 					<button class="dropdown-item" type="button">IT</button>
 					<button class="dropdown-item" type="button">Home Appliances</button>

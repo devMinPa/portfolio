@@ -28,12 +28,12 @@
 		
 		goods.setProductId(rs.getString("p_id"));
 		goods.setPname(rs.getString("p_name"));
-		goods.setUnitPrice(rs.getInt("p_unitprice"));
+		goods.setUnitPrice(rs.getInt("p_price"));
 		goods.setDescription(rs.getString("p_description"));
-		goods.setCategory(rs.getString("p_category"));
+// 		goods.setCategory(rs.getString("p_category"));
 		goods.setManufacturer(rs.getString("p_manufacturer"));
 		goods.setUnitsInStock(rs.getInt("p_unitsInStock"));
-		goods.setCondition(rs.getString("p_condition"));
+// 		goods.setCondition(rs.getString("p_condition"));
 		goods.setFilename(rs.getString("p_filename"));
 		
 		

@@ -1,7 +1,7 @@
 ﻿<%@ page contentType="text/html; charset=utf-8"%>
 <%-- <%@ page import="dto.Product"%> --%>
 <%-- <%@ page import="dao.ProductRepository"%> --%>
-<%@ page errorPage ="exceptionNoProductId.jsp"%>
+<%-- <%@ page errorPage ="exceptionNoProductId.jsp"%> --%>
 <html>
 <head>
 <link rel ="stylesheet" href ="./resources/css/bootstrap.min.css" />
@@ -61,9 +61,9 @@
 				<p><%=rs.getString("p_description")%></p>
 				<p><b>상품 코드 : </b><span class="badge badge-danger"> <%=rs.getString("p_id")%></span>
 				<p><b>제조사</b> : <%=rs.getString("p_manufacturer")%>
-				<p><b>분류</b> : <%=rs.getString("p_category")%>
+<%-- 				<p><b>분류</b> : <%=rs.getString("p_category")%> --%>
 				<p><b>재고 수</b> : <%=rs.getString("p_unitsInStock")%>
-				<h4><%=rs.getString("p_unitprice")%>원</h4>
+				<h4><%=rs.getString("p_price")%>원</h4>
 				<p><form name="addForm" action="./addCart.jsp?id=<%=rs.getString("p_id")%>" method="post">
 					<a href="#" class="btn btn-info" onclick="addToCart()"> 상품 주문 &raquo;</a> 
 					<a href="./cart.jsp" class="btn btn-warning"> 장바구니 &raquo;</a>
