@@ -29,7 +29,7 @@ function getData()//json 요청
 	
 	createAJAX(); // createXHR() 메소드 호출
 	
-	var url = "./ctgInfo.jsp"; //요청 url 설정
+	var url = "./ctgInfo_major.jsp"; //요청 url 설정
 	var reqparam = "s_ctg_id=1";
 	
 	ajax1.onreadystatechange = resGetData; // 다되면 실행할 함수 등록(호출 아님. 역호출)
@@ -47,18 +47,18 @@ function resGetData()
 			//alert("2");
 			
 			var result = ajax1.responseText;
-				alert(result);
+// 				alert(result);
 			
 				var objRes = eval("("+result+")");
 //				alert(objRes);
 			
 			var num = objRes.datas.length;
-			var res = "<div class='dropdown-menu show' x-placement='bottom-start' style='position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;'>";
+			var res = "";
 			var resDiv = document.getElementById("majorCtgList");
 			
 			if(num<1)
 			{
-				res += "</div>";
+				res += "";
 			}
 			else
 			{
@@ -73,35 +73,143 @@ function resGetData()
 				}
 			}
 			
+// 				alert(res);
+			resDiv.innerHTML = res;
+			
+		}
+	}
+}
+
+function select_majorCtg(major){
+// 		alert(major);
+		document.getElementById('majorCtg').innerText = major;
+		getData2(major);
+}
+
+function getData2(majorCtgName)//json 요청
+{		
+	var majorCtgName;
+// 	alert(majorCtgName);
+	
+	createAJAX(); // createXHR() 메소드 호출
+	
+	var url = "./ctgInfo_sub.jsp"; //요청 url 설정
+	var reqparam = "majorCtgName="+majorCtgName;
+	
+	ajax1.onreadystatechange = resGetData2; // 다되면 실행할 함수 등록(호출 아님. 역호출)
+	ajax1.open("Post", url, "true"); //서버의 요청설정 -url변수에 설정된 리소스를 요청할 준비
+	ajax1.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+	ajax1.send(reqparam);
+}
+
+function resGetData2()
+{
+	if(ajax1.readyState == 4)
+	{
+		if(ajax1.status == 200)
+		{
+			//alert("2");
+			
+			var result = ajax1.responseText;
+// 				alert(result);
+			
+				var objRes = eval("("+result+")");
+//				alert(objRes);
+			
+			var num = objRes.datas.length;
+			var res = "";
+			var resDiv = document.getElementById("subCtgList");
+			
+			if(num<1)
+			{
+				res += "";
+			}
+			else
+			{
+				for(var i=0; i<num; i++)
+				{
+					var majorCtgName = objRes.datas[i].majorCtgName;
+					var subCtgId = objRes.datas[i].subCtgId;
+					var subCtgName = objRes.datas[i].subCtgName;
+					
+					res +="<button class='dropdown-item' type='button'";
+					res +=" onclick='select_Category(this.innerText); getProducts();'>";
+					res += subCtgName+"</button>";
+				}
+			}
+			
 //				alert(res);
 			resDiv.innerHTML = res;
 		}
 	}
 }
 
-function select_majorCtg(major){
-//		alert(major);
-	document.getElementById('majorCtg').innerText = major;
-	
-	
+function select_Category(ctgName){
+// 	alert(ctgName);
+	document.getElementById('subCtg').innerText = ctgName;
 }
 
-function getData2()//json 요청
+function getProducts(ctgName)//json 요청
 {		
-	var div_name = "subCtgList";
-//		var ctg_id = document.forms[form_name].elements["txt_user_id"].value;
+	alert(ctgName);
 	
 	createAJAX(); // createXHR() 메소드 호출
 	
-	var url = "./ctgInfo_sub.jsp"; //요청 url 설정
-	var reqparam = "s_ctg_name=1";
+	var url = "./getProducts.jsp"; //요청 url 설정
+	var reqparam = "ctg_name="+ctgName;
 	
-	ajax1.onreadystatechange = resGetData; // 다되면 실행할 함수 등록(호출 아님. 역호출)
+	ajax1.onreadystatechange = resGetProducts; // 다되면 실행할 함수 등록(호출 아님. 역호출)
 	ajax1.open("Post", url, "true"); //서버의 요청설정 -url변수에 설정된 리소스를 요청할 준비
 	ajax1.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
 	ajax1.send(reqparam);
 }
 
+function resGetProducts()
+{
+	if(ajax1.readyState == 4)
+	{
+		if(ajax1.status == 200)
+		{
+			//alert("2");
+			
+			var result = ajax1.responseText;
+				alert(result);
+			
+				var objRes = eval("("+result+")");
+//				alert(objRes);
+			
+			var num = objRes.datas.length;
+			var res = "";
+			var resDiv = document.getElementById("productsList");
+			
+			if(num<1)
+			{
+				res += "";
+			}
+			else
+			{
+				for(var i=0; i<num; i++)
+				{
+					var p_id = objRes.datas[i].p_id;
+					var p_name = objRes.datas[i].p_name;
+					var p_price = objRes.datas[i].p_price;
+					var p_description = objRes.datas[i].p_description;
+					var p_filename = objRes.datas[i].p_filename;
+					var ctg_name = objRes.datas[i].ctg_name;
+					
+					res +="<img src ='./upload2/"+p_filename+"' style ='width: 100%'>";
+					res += "<h3>"+p_name+"</h3>";
+					res += "<p>"+p_description+"</p>";
+					res += "<p>"+p_price+"원</p>";
+					res += "<a href='./product.jsp?id="+p_id+"' class='btn btn-secondary' role='button'> 상세 정보 &raquo;</a>"
+				}
+			}
+			
+//				alert(res);
+			resDiv.innerHTML = res;
+		}
+	}
+}
 
 </script>
 </head>
@@ -117,22 +225,12 @@ function getData2()//json 요청
 			<li class="nav-item dropdown">
 				<button id="majorCtg" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Books</button>
 				<div id="majorCtgList" class="dropdown-menu">
-<!-- 					<button class="dropdown-item" type="button" value="Books" onclick="select_majorCtg(this.value)">Books</button> -->
-<!-- 					<button class="dropdown-item" type="button">Clothes</button> -->
-<!-- 					<button class="dropdown-item" type="button">IT</button> -->
-<!-- 					<button class="dropdown-item" type="button">Home Appliances</button> -->
-<!-- 					<button class="dropdown-item" type="button">Kitchen Equipments</button> -->
-<!-- 					<button class="dropdown-item" type="button">Sports</button> -->
-<!-- 					<button class="dropdown-item" type="button">Contents</button> -->
-				</div>
+				
+				</div>&raquo;
 			</li>
 			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">Sub_Ctg</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">sportsBook</a>
-					<a class="dropdown-item" href="#">examinationBook</a>
-					<a class="dropdown-item" href="#">historyBook</a>
-					<a class="dropdown-item" href="#">electricBook</a>
+				<button id="subCtg" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Sub Category</button>
+				<div id="subCtgList" class="dropdown-menu">
 				</div>
 			</li>
 		</ul>
@@ -140,7 +238,7 @@ function getData2()//json 요청
 
 	<div class="container">
 		<div class="row" align="center">
-			<div class="col-md-4">
+			<div id="productsList" class="col-md-4">
 <%-- 				<img src ="./upload2/<%=product.getFilename()%>" style ="width: 100%"> --%>
 <%-- 				<h3><%=product.getPname()%></h3> --%>
 <%-- 				<p><%=product.getDescription()%> --%>

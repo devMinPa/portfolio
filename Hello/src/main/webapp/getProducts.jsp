@@ -16,13 +16,13 @@
 // 	else
 // 		user_id = request.getParameter("user_id").trim();
 		
-	String majorCtgName = (request.getParameter("majorCtgName") == null) ? "" : request.getParameter("majorCtgName").trim();
+	String ctgName = (request.getParameter("ctgName") == null) ? "" : request.getParameter("ctgName").trim();
 	
 	QueryBean.getConnection();
 	
 	ArrayList resArr = new ArrayList();
 	try {
-		resArr = QueryBean.getCtgInfo_S(majorCtgName);
+		resArr = QueryBean.getProducts(ctgName);
 		
 	} catch (SQLException e) {
 		out.print(e.toString());
@@ -36,16 +36,22 @@
 		out.println("}");
 	} else {
 		out.print("{");
-		out.print("\"majorCtgName\":\"" + (String) resArr.get(0) + "\", ");
-		out.print("\"subCtgId\":\"" + (String) resArr.get(1) + "\", ");
-		out.print("\"subCtgName\":\"" + (String) resArr.get(2) + "\" ");
+		out.print("\"p_id\":\"" + (String) resArr.get(0) + "\", ");
+		out.print("\"p_name\":\"" + (String) resArr.get(1) + "\", ");
+		out.print("\"p_price\":\"" + (String) resArr.get(2) + "\", ");
+		out.print("\"p_description\":\"" + (String) resArr.get(3) + "\", ");
+		out.print("\"p_filename\":\"" + (String) resArr.get(4) + "\", ");
+		out.print("\"ctg_name\":\"" + (String) resArr.get(5) + "\" ");
 		out.print("}");
-		for (int i = 3; i < resArr.size(); i += 3) {
+		for (int i = 6; i < resArr.size(); i += 6) {
 			out.print(",");
 			out.print("{");
-			out.print("\"majorCtgName\":\"" + (String) resArr.get(i) + "\", ");
-			out.print("\"subCtgId\":\"" + (String) resArr.get(i+1) + "\", ");
-			out.print("\"subCtgName\":\"" + (String) resArr.get(i+2) + "\" ");
+			out.print("\"p_id\":\"" + (String) resArr.get(i) + "\", ");
+			out.print("\"p_name\":\"" + (String) resArr.get(i+1) + "\", ");
+			out.print("\"p_price\":\"" + (String) resArr.get(i+2) + "\", ");
+			out.print("\"p_description\":\"" + (String) resArr.get(i+3) + "\", ");
+			out.print("\"p_filename\":\"" + (String) resArr.get(i+4) + "\", ");
+			out.print("\"ctg_name\":\"" + (String) resArr.get(i+5) + "\" ");
 			out.print("}");
 		}
 		out.println("]");

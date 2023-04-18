@@ -229,3 +229,26 @@ select
  where
         o.order_id=l.order_id
 order by p_id;
+
+select m_ctg_name, s_ctg_id, s_ctg_name  from ctg_info where m_ctg_name ='Clothes' order by s_ctg_name;
+
+select p_id, p_name, p_price, p_description, p_filename, ctg_name
+  from p_list
+ where ctg_name like '%?%';
+
+
+drop view ctg_info;
+create view ctg_info
+as select m.ctg_id m_ctg_id, m.ctg_name m_ctg_name, s.ctg_id s_ctg_id, s.ctg_name s_ctg_name
+     from major_category m, sub_category s
+    where m.ctg_id=s.major_ctg
+ order by m.ctg_name, s.ctg_name;
+
+create view p_list
+as select p.p_id, p_name, p_price, p_description, p_manufacturer, p_unitsinstock, p_filename, concat(concat(c1.ctg_name,'/'),c2.ctg_name) ctg_name
+  from product p, sub_category c2, category_map m, major_category c1
+ where p.p_id = m.p_id
+   and m.ctg_id = c2.ctg_id
+   and c2.major_ctg=c1.ctg_id;
+   
+   

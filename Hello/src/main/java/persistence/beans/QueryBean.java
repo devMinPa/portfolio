@@ -98,7 +98,7 @@ public class QueryBean
 		StringBuffer sb = new StringBuffer();
 
 		sb.append(" select "); 
-		sb.append("         m_ctg_name, s_ctg_name ");
+		sb.append("         m_ctg_name, s_ctg_id, s_ctg_name ");
 		sb.append(" from  ");
 		sb.append("         ctg_info  ");
 		sb.append(" where  ");
@@ -115,6 +115,37 @@ public class QueryBean
 
 			res.add(rs.getString(1));
 			res.add(rs.getString(2));
+			res.add(rs.getString(3));
+			
+		}
+		System.out.println(sb.toString());
+		return res;
+	}
+	
+	public ArrayList getProducts(String ctgName) throws Exception {
+		
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append(" select "); 
+		sb.append("         p_id, p_name, p_price, p_description, p_filename, ctg_name ");
+		sb.append(" from  ");
+		sb.append("         p_list  ");
+		sb.append(" where  ");
+		sb.append("         ctg_name like '%"+ ctgName +"%'");
+		
+		System.out.println("쿼리 문장: "+sb.toString());
+		
+		rs = stmt.executeQuery(sb.toString());
+
+		ArrayList res = new ArrayList();
+		while (rs.next()) {
+
+			res.add(rs.getString(1));
+			res.add(rs.getString(2));
+			res.add(rs.getString(3));
+			res.add(rs.getString(4));
+			res.add(rs.getString(5));
+			res.add(rs.getString(6));
 			
 		}
 		System.out.println(sb.toString());
