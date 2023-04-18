@@ -44,10 +44,10 @@
 				//alert("2");
 				
 				var result = ajax1.responseText;
- 				alert(result);
+//  				alert(result);
 				
  				var objRes = eval("("+result+")");
- 				alert(objRes);
+//  				alert(objRes);
 				
 				var num = objRes.datas.length;
 				var res = "<div class='dropdown-menu show' x-placement='bottom-start' style='position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;'>";
@@ -65,38 +65,26 @@
 						var majorCtgName = objRes.datas[i].majorCtgName;
 						
 						res +="<button class='dropdown-item' type='button'";
-						res +=" value='"+majorCtgId+"' onclick='select_Major("+majorCtgId+")'>";
+						res +=" onclick='select_majorCtg(this.innerText)'>";
 						res += majorCtgName+"</button>";
 					}
 				}
 				
-				alert(res);
+// 				alert(res);
 				resDiv.innerHTML = res;
 				
 				
 			}
 		}
 	}
-	function searchData()
-	{
-	
-		//alert("111")
-		var form_name = "form_main";
-		var user_id = document.forms[form_name].elements["txt_user_id"].value;
-		//alert("123");
-// 		if(user_id == "")
-// 		{			
-			
-// 			document.forms[form_name].elements["txt_user_id"].focus();
-// 			return;
-// 		}
-// 		else
-// 		{
-			//alert("user_id ");
-			getData();
-// 		}		
+
+	function select_majorCtg(major){
+// 		alert(major);
+		document.getElementById('majorCtg').innerText = major;
+		
+		
 	}
-	
+
 </script>
 
 
@@ -109,45 +97,17 @@
 
 
 		</div>
+		
 		<ul class="nav nav-tabs">
 			<li class="nav-item dropdown">
 				<button id="majorCtg" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Books</button>
 				<div id="majorCtgList" class="dropdown-menu">
-<!-- 					<button class="dropdown-item" type="button" value="Books" onclick="select_Major(this.value)">Books</button> -->
-<!-- 					<button class="dropdown-item" type="button">Clothes</button> -->
-<!-- 					<button class="dropdown-item" type="button">IT</button> -->
-<!-- 					<button class="dropdown-item" type="button">Home Appliances</button> -->
-<!-- 					<button class="dropdown-item" type="button">Kitchen Equipments</button> -->
-<!-- 					<button class="dropdown-item" type="button">Sports</button> -->
-<!-- 					<button class="dropdown-item" type="button">Contents</button> -->
-				</div>
+<!-- 					<button class="dropdown-item" type="button" onclick="select_majorCtg(this.innerText)">Books</button> -->
+				</div></div>
 			</li>
 		</ul>
 	</div>
 			
-<form name="form_main" onSubmit="javascript:return false;">
-	<div class="container">
-	    <div class="row">
-	        <div class="col-xs-12"> -</div>
-	    </div>
-	    <div class="row">
-	        <div class="col-sm-6 col-md-3"></div>
-	        <div class="col-sm-6">   
-	        	<div class="input-group mb-3">
-		      		<input type="text" name='txt_user_id' class="form-control" placeholder="ID 입력바람!" aria-label="Recipient's username" aria-describedby="button-addon2" onkeyup='javascript:searchData();'>
-		      		<button class="btn btn-primary" type="button" id="button-addon2" onClick='javascript:searchData();' >Button</button>
-		    	</div>
-		    	<div id='div_res' class="input-group mb-3" >
-		    	
-		    	</div>
-    		</div>
-	        <div class="col-md-3"></div>
-	    </div>
-	    <div class="row">
-	        <div class="col-xs-12"></div>
-	    </div>
-	</div>
- </form>
  
  	
    

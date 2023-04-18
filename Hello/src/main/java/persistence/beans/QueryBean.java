@@ -93,6 +93,34 @@ public class QueryBean
 		return res;
 	}
 	
+	public ArrayList getCtgInfo_S(String majorCtgName) throws Exception {
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(" select "); 
+		sb.append("         m_ctg_name, s_ctg_name ");
+		sb.append(" from  ");
+		sb.append("         ctg_info  ");
+		sb.append(" where  ");
+		sb.append("         m_ctg_name ='"+ majorCtgName +"' ");
+		sb.append(" order by  ");
+		sb.append("         s_ctg_name ");
+		
+		System.out.println("쿼리 문장: "+sb.toString());
+		
+		rs = stmt.executeQuery(sb.toString());
+
+		ArrayList res = new ArrayList();
+		while (rs.next()) {
+
+			res.add(rs.getString(1));
+			res.add(rs.getString(2));
+			
+		}
+		System.out.println(sb.toString());
+		return res;
+	}
+	
 	//2.insert
 	public int insertUserInfo(String user_id, String user_name, String user_phone, String user_grade)//시간빼고 다 받아옴, db시간을 쓰기위해서
 	{
